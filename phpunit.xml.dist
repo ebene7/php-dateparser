@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="E7 PHP Date Parser Test Suite">
+            <directory>tests/E7/</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/E7/</directory>
+        </whitelist>
+    </filter>
+    <groups>
+        <exclude>
+            <group>slow</group>
+        </exclude>
+    </groups>
+    <php>
+        <ini name="date.timezone" value="UTC"/>
+    </php>
+</phpunit>

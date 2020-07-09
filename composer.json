@@ -1,0 +1,23 @@
+{
+    "name": "ebene7/php-dateparser",
+    "description": "E7 PHP Date Parser",
+    "homepage": "https://github.com/ebene7/php-dateparser",
+    "authors": [
+        {
+            "name": "Daniel Barty",
+            "email": "daniel@ebene7.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.5.6"
+    },
+    "autoload": {
+        "psr-4": {"E7\\": "src/E7"}
+    },
+    "autoload-dev": {
+        "psr-4": {"E7\\Tests\\": "tests/E7"}
+    }
+}
