@@ -3,17 +3,17 @@
 namespace E7\Tests\DateParser\Resolver;
 
 use DateTime;
-use E7\DateParser\Resolver\MonthResolver;
+use E7\DateParser\Resolver\WeekResolver;
 use E7\DateParser\Result;
 
-class MonthResolverTest extends ResolverTestCase
+class WeekResolverTest extends ResolverTestCase
 {
     /**
      * @dataProvider providerSupports
      */
     public function testSupports(string $query, bool $supports)
     {
-        $resolver = new MonthResolver();
+        $resolver = new WeekResolver();
         $this->assertEquals($supports, $resolver->supports($query));
     }
     
@@ -21,22 +21,18 @@ class MonthResolverTest extends ResolverTestCase
     {
         return [
             [
-                '2020-02',
+                'w10-2020',
                 true,
             ],
-            [
-                '2020',
-                false,
-            ]
         ];
     }
-
+    
     /**
      * @dataProvider providerResolve
      */
     public function testResolve(string $query, array $expected)
     {
-        $resolver = new MonthResolver($this->getClock());
+        $resolver = new WeekResolver($this->getClock());
         $this->doTestResolve($resolver, $query, $expected);
     }
 
@@ -45,36 +41,36 @@ class MonthResolverTest extends ResolverTestCase
         // assume FrozenClock date 2020-07-10
 
         return [
-            'date-string' => [
-                '2020-07',
+            'string-week' => [
+                'w28-2020',
                 [
                     'result' => Result::class,
-                    'start' => '2020-07-01 00:00:00',
-                    'end' => '2020-07-31 23:59:59',
+                    'start' => '2020-07-06 00:00:00',
+                    'end' => '2020-07-12 23:59:59',
                 ]
             ],
-            'month' => [
-                'month',
+            'week' => [
+                'week',
                 [
                     'result' => Result::class,
-                    'start' => '2020-07-01 00:00:00',
-                    'end' => '2020-07-31 23:59:59',
+                    'start' => '2020-07-06 00:00:00',
+                    'end' => '2020-07-12 23:59:59',
                 ]
             ],
-            'lastmonth' => [
-                'lastmonth',
+            'lastweek' => [
+                'lastweek',
                 [
                     'result' => Result::class,
-                    'start' => '2020-06-01 00:00:00',
-                    'end' => '2020-06-30 23:59:59',
+                    'start' => '2020-06-29 00:00:00',
+                    'end' => '2020-07-05 23:59:59',
                 ]
             ],
-            'nextmonth' => [
-                'nextmonth',
+            'nextweek' => [
+                'nextweek',
                 [
                     'result' => Result::class,
-                    'start' => '2020-08-01 00:00:00',
-                    'end' => '2020-08-31 23:59:59',
+                    'start' => '2020-07-13 00:00:00',
+                    'end' => '2020-07-19 23:59:59',
                 ]
             ],
         ];

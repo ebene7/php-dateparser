@@ -27,32 +27,11 @@ class DateParserTest extends TestCase
         $today = new DateTime();
         
         return [
-            'week-of-year' => [
-                'w20-2020',
-                [
-                    'start' => '2020-05-11 00:00:00',
-                    'end' => '2020-05-17 23:59:59',
-                ]
-            ],
             'week-of-year-range' => [
                 'w20-2020..w25-2020',
                 [
                     'start' => '2020-05-11 00:00:00',
                     'end' => '2020-06-21 23:59:59',
-                ]
-            ],
-            'string-week' => [
-                'week',
-                [
-                    'start' => (new DateTime())->modify('last monday')->format('Y-m-d 00:00:00'),
-                    'end' => (new DateTime())->modify('next sunday')->format('Y-m-d 23:59:59'),
-                ]
-            ],
-            'only-year' => [
-                '2020',
-                [
-                    'start' => '2020-01-01 00:00:00',
-                    'end' => '2020-12-31 23:59:59',
                 ]
             ],
             'only-year-range' => [
@@ -62,32 +41,11 @@ class DateParserTest extends TestCase
                     'end' => '2021-12-31 23:59:59',
                 ]
             ],
-            'string-today' => [
-                'today',
-                [
-                    'start' => (new DateTime())->format('Y-m-d 00:00:00'),
-                    'end' => (new DateTime())->format('Y-m-d 23:59:59'),
-                ]
-            ],
-            'year-month' => [
-                '2020-02',
-                [
-                    'start' => '2020-02-01 00:00:00',
-                    'end' => '2020-02-29 23:59:59',
-                ]
-            ],
             'year-month-range' => [
                 '2020-02..2020-05',
                 [
                     'start' => '2020-02-01 00:00:00',
                     'end' => '2020-05-31 23:59:59',
-                ]
-            ],
-            'full-date' => [
-                '2020-02-15',
-                [
-                    'start' => '2020-02-15 00:00:00',
-                    'end' => '2020-02-15 23:59:59',
                 ]
             ],
             'full-date-range' => [
@@ -106,6 +64,4 @@ class DateParserTest extends TestCase
             ],            
         ];
     }
-    
-
 }

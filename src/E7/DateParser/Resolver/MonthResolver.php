@@ -14,27 +14,43 @@ class MonthResolver extends AbstractResolver
 
     public function resolve(string $query): ?Result
     {
-        $query = $this->prepare($query);
+        $init = null;
 
         // resolve month: 2020-02
-        if (!preg_match('=^(?P<year>\d{4})-(?P<month>\d{1,2})$=', $query, $match)) {
+        if (preg_match('=^(?P<year>\d{4})-(?P<month>\d{1,2})$=', $query, $match)) {
+            $init = new DateTime($match['year'] . '-' . $match['month']);
+        }
+
+        else {
+            switch (strtolower($query)) {
+                case 'month':
+                    $init = $this->getClock()->now();
+                    break;
+                case 'lastmonth';
+                    $init = $this->getClock()->now();
+                    $init = $init->modify('-1 month');
+                    break;
+                case 'nextmonth';
+                    $init = $this->getClock()->now();
+                    $init = $init->modify('+1 month');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (null === $init) {
             return null;
         }
 
-        $start = new DateTime($match['year'] . '-' . $match['month'] . '-01 00:00:00');
-        $end = new DateTime($match['year'] . '-' . $match['month'] . '-' . $start->format('t') . ' 23:59:59');
-        return Result::create($query, $start, $end);
-    }
+        $start = clone $init;
+        $start = $start->setDate($start->format('Y'), $start->format('m'), 1);
+        $start = $start->setTime(0, 0, 0);
 
-    protected function prepare(string $query): string
-    {
-        switch (strtolower($query)) {
-            case 'month':
-                return (new DateTime())->format('Y-m');
-            case 'lastmonth';
-                return (new DateTime())->modify('-1 month')->format('Y-m');
-            default:
-                return $query;
-        }
+        $end = clone $init;
+        $end = $end->setDate($end->format('Y'), $end->format('m'), $end->format('t'));
+        $end = $end->setTime(23, 59, 59);
+
+        return Result::create($query, $start, $end);
     }
 }
