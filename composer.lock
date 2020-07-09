@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "381d83c8ec8bd80266279acf6c2f959c",
-    "packages": [],
+    "content-hash": "45c5028be6839b87a598deef0a037c83",
+    "packages": [
+        {
+            "name": "ebene7/php-clock",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ebene7/php-clock.git",
+                "reference": "1072c0c05dc955ad3d95d1af5e00e624475902d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ebene7/php-clock/zipball/1072c0c05dc955ad3d95d1af5e00e624475902d8",
+                "reference": "1072c0c05dc955ad3d95d1af5e00e624475902d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "6.5.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "E7\\": "src/E7"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Daniel Barty",
+                    "email": "daniel@ebene7.com"
+                }
+            ],
+            "description": "E7 PHP clock",
+            "homepage": "https://github.com/ebene7/php-clock",
+            "time": "2020-07-09T14:05:19+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",

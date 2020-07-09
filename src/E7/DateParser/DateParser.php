@@ -2,6 +2,7 @@
 
 namespace E7\DateParser;
 
+use E7\Clock\ClockInterface;
 use E7\DateParser\Resolver\ResolverInterface;
 use Exception;
 use RuntimeException;
@@ -56,14 +57,14 @@ class DateParser implements DateParserInterface
         throw new Exception('This point should not be reached!');
     }
 
-    public static function create()
+    public static function create(ClockInterface $clock = null)
     {
         $parser = new self();
         
-        $parser->addResolver(new Resolver\YearResolver());
-        $parser->addResolver(new Resolver\MonthResolver());
-        $parser->addResolver(new Resolver\DayResolver());
-        $parser->addResolver(new Resolver\WeekResolver());
+        $parser->addResolver(new Resolver\YearResolver($clock));
+        $parser->addResolver(new Resolver\MonthResolver($clock));
+        $parser->addResolver(new Resolver\DayResolver($clock));
+        $parser->addResolver(new Resolver\WeekResolver($clock));
         
         return $parser;
     }

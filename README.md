@@ -50,6 +50,8 @@ Supported patterns:
 * `2020-05-15`
 * `today`
 * `yesterday`
+* `tommorrow`
+* `[next|last] <dayofweek>`
 
 ### `WeekResolver`
 
@@ -58,6 +60,7 @@ Supported patterns:
 * `w05-2020`
 * `week`
 * `lastweek`
+* `nextweek`
 
 ### `MonthResolver`
 
@@ -66,6 +69,7 @@ Supported patterns:
 * `2020-05`
 * `month`
 * `lastmonth`
+* `nextmonth`
 
 ### `YearResolver`
 
@@ -74,3 +78,4 @@ Supported patterns:
 * `2020`
 * `year`
 * `lastyear`
+* `nextyear`

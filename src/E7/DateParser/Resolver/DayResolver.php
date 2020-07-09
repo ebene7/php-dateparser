@@ -7,6 +7,10 @@ use DateTime;
 
 class DayResolver extends AbstractResolver
 {
+    const DAYS = [
+        'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+    ];
+
     public function getName(): string
     {
         return 'day';
@@ -14,28 +18,42 @@ class DayResolver extends AbstractResolver
 
     public function resolve(string $query): ?Result
     {
-        $query = $this->prepare($query);
+        $init = null;
 
-        // resolve day: 2020-06-15
-        if (!preg_match('=^(?P<year>\d{4})-(?P<month>\d{1,2})-(?P<day>\d{1,2})$=', $query, $match)) {
+        if (preg_match('=^(?P<year>\d{4})-(?P<month>\d{1,2})-(?P<day>\d{1,2})$=', $query, $match)) {
+            $init = new DateTime($match['year'] . '-' . $match['month'] . '-' . $match['day']);
+        } else if (preg_match('=^(?P<direction>last|next)(.*)(?P<day>' . implode('|', self::DAYS) . ')=i', $query, $match)) {
+            $init = $this->getClock()->now();
+            $init = $init->modify($match['direction'] . ' ' . $match['day']);
+        } else {
+            switch (strtolower($query)) {
+                case 'today':
+                case 'now':
+                    $init = $this->getClock()->now();
+                    break;
+                case 'yesterday';
+                    $init = $this->getClock()->now();
+                    $init = $init->modify('-1 days');
+                    break;
+                case 'tomorrow';
+                    $init = $this->getClock()->now();
+                    $init = $init->modify('+1 days');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (null === $init) {
             return null;
         }
 
-        $start = new DateTime($match['year'] . '-' . $match['month'] . '-' . $match['day'] . ' 00:00:00');
-        $end = new DateTime($match['year'] . '-' . $match['month'] . '-' . $match['day'] . ' 23:59:59');
-        return Result::create($query, $start, $end);
-    }
+        $start = clone $init;
+        $start = $start->setTime(0, 0, 0);
 
-    protected function prepare(string $query): string
-    {
-        switch (strtolower($query)) {
-            case 'today':
-            case 'now':
-                return (new DateTime())->format('Y-m-d');
-            case 'yesterday';
-                return (new DateTime())->modify('-1 days')->format('Y-m-d');
-            default:
-                return $query;
-        }
+        $end = clone $init;
+        $end = $end->setTime(23, 59, 59);
+
+        return Result::create($query, $start, $end);
     }
 }

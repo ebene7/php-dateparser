@@ -37,6 +37,8 @@ class YearResolverTest extends ResolverTestCase
 
     public function providerResolve(): array
     {
+        // assume FrozenClock date 2020-07-10
+
         return [
             'year-string' => [
                 '2020',
@@ -50,16 +52,24 @@ class YearResolverTest extends ResolverTestCase
                 'year',
                 [
                     'result' => Result::class,
-                    'start' => (new DateTime())->format('Y-01-01 00:00:00'),
-                    'end' => (new DateTime())->format('Y-12-31 23:59:59'),
+                    'start' => '2020-01-01 00:00:00',
+                    'end' => '2020-12-31 23:59:59',
                 ]
             ],
             'lastyear' => [
                 'lastyear',
                 [
                     'result' => Result::class,
-                    'start' => (new DateTime())->modify('-1 year')->format('Y-01-01 00:00:00'),
-                    'end' => (new DateTime())->modify('-1 year')->format('Y-12-31 23:59:59'),
+                    'start' => '2019-01-01 00:00:00',
+                    'end' => '2019-12-31 23:59:59',
+                ]
+            ],
+            'nextyear' => [
+                'nextyear',
+                [
+                    'result' => Result::class,
+                    'start' => '2021-01-01 00:00:00',
+                    'end' => '2021-12-31 23:59:59',
                 ]
             ],
         ];
